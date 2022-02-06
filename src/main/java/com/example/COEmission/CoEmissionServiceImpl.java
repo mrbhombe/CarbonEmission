@@ -40,7 +40,13 @@ public class CoEmissionServiceImpl {
                 if(distanceDuration.getStatus().equalsIgnoreCase("OK"))
                 {
                     Double km = Double.parseDouble(distanceDuration.getDistance().getText().split(" ")[0]);
-                    Double co2 = (km * liter)/kmPerGivenLiter;
+                    //we need 5l for 100km on an average
+                    // let's calculate for 125km
+                    Double usedPetrol = (km * liter)/kmPerGivenLiter;
+
+                    //2392g used CO2 for 5l with 100km so we have to multiply with 2392 so we will
+                    // get CO2 emission in gram/km
+                    Double co2 = (usedPetrol * 2392)/km;
                     costEmission = new CostEmission(co2,distanceDuration.getDistance().getText());
                 }
                 else
